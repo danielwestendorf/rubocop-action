@@ -76,7 +76,8 @@ def run_rubocop
   annotations = []
   errors = nil
   Dir.chdir(@GITHUB_WORKSPACE) {
-    errors = JSON.parse(`rubocop --format json`)
+    cmd = ENV["BUNDLED_RUBOCOP"] ? "bundle exec rubocop" : "rubocop"
+    errors = JSON.parse(`#{cmd} --format json`)
   }
   conclusion = "success"
   count = 0
